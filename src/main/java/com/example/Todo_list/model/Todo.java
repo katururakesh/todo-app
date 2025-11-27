@@ -18,7 +18,7 @@ public class Todo {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String titleName;
 
     private String description;
     private boolean completed = false;

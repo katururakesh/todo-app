@@ -1,9 +1,25 @@
+# You don't guess what to write — you choose based on what you want to achieve:
+# What You Want             → What to Write in Kubernetes
+# Run a container           → Deployment
+# Expose to browser / API   → Service (NodePort / ClusterIP / LoadBalancer)
+# Store data permanently    → PVC + PV
+# Store passwords / env     → Secret / ConfigMap
+# Group everything          → Namespace
+# Access with domain        → Ingress
+
+# -------------------------------------
+# Group Everything → Namespace
+# -------------------------------------
 apiVersion: v1
 kind: Namespace
 metadata:
   name: todo-app
 
 ---
+
+# -------------------------------------
+# MySQL Database → Deployment (Run DB container)
+# -------------------------------------
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,6 +53,10 @@ spec:
             - "--default-authentication-plugin=mysql_native_password"
 
 ---
+
+# -------------------------------------
+# Expose MySQL internally → Service (ClusterIP)
+# -------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
@@ -51,6 +71,10 @@ spec:
   type: ClusterIP
 
 ---
+
+# -------------------------------------
+# Todo-App Backend → Deployment (Run container)
+# -------------------------------------
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -68,7 +92,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: rakesh212h1a0577/todo-app:1.0
+          image: rakesh212h1a0577/todo-app:latest
           ports:
             - containerPort: 8080
           env:
@@ -80,6 +104,10 @@ spec:
               value: "rakesh"
 
 ---
+
+# -------------------------------------
+# Expose Backend to Browser → Service (NodePort)
+# -------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
@@ -95,6 +123,10 @@ spec:
       nodePort: 30080
 
 ---
+
+# -------------------------------------
+# PhpMyAdmin → Deployment (Run container)
+# -------------------------------------
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -124,6 +156,10 @@ spec:
             - containerPort: 80
 
 ---
+
+# -------------------------------------
+# Expose PhpMyAdmin via Browser → Service (NodePort)
+# -------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
@@ -137,3 +173,4 @@ spec:
     - port: 80
       targetPort: 80
       nodePort: 30050
+

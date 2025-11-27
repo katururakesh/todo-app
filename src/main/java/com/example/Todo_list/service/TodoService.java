@@ -29,7 +29,7 @@ public class TodoService {
 
     public Todo update(Long id, Todo newTodo) {
         Todo old = getById(id);
-        old.setTitle(newTodo.getTitle());
+        old.setTitleName(newTodo.getTitleName());
         old.setDescription(newTodo.getDescription());
         old.setCompleted(newTodo.isCompleted());
         return repo.save(old);

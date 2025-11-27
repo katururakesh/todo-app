@@ -11,7 +11,7 @@ services:
       MYSQL_USER: todo_user
       MYSQL_PASSWORD: rakesh
     ports:
-      - "3306:3306"
+      - "5432:3306"
     command: ["--default-authentication-plugin=mysql_native_password"]
     volumes:
       - mysql_data:/var/lib/mysql
@@ -44,7 +44,7 @@ services:
       SPRING_DATASOURCE_USERNAME: todo_user
       SPRING_DATASOURCE_PASSWORD: rakesh
     ports:
-      - "8080:8080"
+      - "9090:8080"
     networks:
       - todo-net
 
